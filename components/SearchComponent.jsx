@@ -1,13 +1,16 @@
 'use client'
 
 import React, { useState } from 'react'
+import { getCharacter } from '@/services/characterService';
+import axios from 'axios';
 
 export default function SearchComponent() {
 
     const [nickname, setNickname] = useState('');
 
     const handleSearch = (e) => {
-        console.log(nickname);
+        getCharacter(nickname);
+        // console.log(response)
         e.preventDefault();
     }
 
