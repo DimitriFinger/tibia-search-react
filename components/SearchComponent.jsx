@@ -2,16 +2,27 @@
 
 import React, { useState } from 'react'
 import { getCharacter } from '@/services/characterService';
-import axios from 'axios';
+import ResultComponent from './ResultComponent';
 
 export default function SearchComponent() {
 
     const [nickname, setNickname] = useState('');
+    const [isResultVisible, setIsResultVisible] = useState(false);
+    const [charData, setCharData] = useState({});
+    const [isUsernameInvalid, setIsUsernameInvalid] = useState(false);
 
     const handleSearch = (e) => {
-        getCharacter(nickname);
-        // console.log(response)
         e.preventDefault();
+
+        setIsUsernameInvalid(false);
+        getCharacter(nickname).then(response => setCharData(response));
+
+        if (charData.name == '') {
+            setIsUsernameInvalid(true);
+        } else {
+            setIsResultVisible(true)
+        }
+        console.log(charData)
     }
 
     return (
@@ -32,12 +43,14 @@ export default function SearchComponent() {
                                     className="pl-2.5 block w-3/4 rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-400 focus:ring-green-400 focus:ring-2 focus:outline-none hover:ring-green-400 hover:ring-2 placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                             </div>
                         </div>
+                        {isUsernameInvalid ? <h1>Invalid username.</h1> : null}
                         <div className='flex justify-center'>
                             <button onClick={handleSearch} className="mt-5 w-1/3 justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
                                 Search
                             </button>
                         </div>
                     </form>
+                    {/* {isResultVisible ? <ResultComponent /> : <h1>Dime</h1>} */}
                 </div>
             </div>
         </>
