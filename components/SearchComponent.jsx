@@ -9,27 +9,17 @@ export default function SearchComponent() {
     const [nickname, setNickname] = useState('');
     const [isResultVisible, setIsResultVisible] = useState(false);
     const [charData, setCharData] = useState({});
-    const [errorMessage, setErrorMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSearch = (e) => {
         e.preventDefault();
-        setErrorMessage(false);
+        if (nickname == '') return
+
         setIsLoading(true);
-        setCharData('');
-
-        if (nickname == '') {
-            setIsLoading(false);
-            return
-        }
-
         setIsResultVisible(true);
         getCharacter(nickname)
             .then(response => setCharData(response))
             .then(() => setIsLoading(false))
-            .then(() => { if (charData.name == '') setErrorMessage(true) })
-
-        console.log(charData)
     }
 
     return (
@@ -57,7 +47,7 @@ export default function SearchComponent() {
                             </button>
                         </div>
                     </form>
-                    {isResultVisible ? <ResultComponent charData={...charData} isLoading={isLoading} errorMessage={errorMessage} /> : null}
+                    {isResultVisible ? <ResultComponent charData={...charData} isLoading={isLoading} /> : null}
                 </div>
             </div>
         </>

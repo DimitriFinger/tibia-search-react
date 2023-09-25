@@ -1,10 +1,8 @@
-'use client'
-
 import React from 'react'
 
 import LoadingSpinner from './LoadingSpinner';
 
-export default function ResultComponent({ charData, isLoading, errorMessage }) {
+export default function ResultComponent({ charData, isLoading }) {
     if (charData.name == '') {
         return (
             <div className="p-8 flex min-h-full justify-center border-2 px-6 py-12 mt-8 lg:px-8 ">
